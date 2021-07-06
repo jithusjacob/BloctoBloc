@@ -7,6 +7,9 @@ abstract class AddEvent extends Equatable {
 }
 
 
+class AddInitial extends AddEvent {
+  const AddInitial();
+}
 class AddDescChange extends AddEvent {
   const AddDescChange(this.desc);
   final String desc;

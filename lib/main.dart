@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
           create: (context) => AddBloc(),
         ),
         BlocProvider<MainBloc>(
-          create: (context) => MainBloc(),
+          create: (context) => MainBloc(
+            addBloc: BlocProvider.of<AddBloc>(context),
+          ),
         ),
       ],
       child: MaterialApp(

@@ -1,15 +1,26 @@
+import 'dart:async';
+
+import 'package:bloctobloc/business_logic/bloc/add_bloc/add_bloc.dart';
 import 'package:bloctobloc/business_logic/bloc/main_bloc/main_event.dart';
 import 'package:bloctobloc/business_logic/bloc/main_bloc/main_state.dart';
 import 'package:bloctobloc/business_logic/models/item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
-  MainBloc()
+  final AddBloc addBloc;
+  StreamSubscription? addSubscription;
+  MainBloc({required this.addBloc})
       : super(
           MainState(
             items: <Item>[],
           ),
-        );
+        ) {
+    addSubscription = addBloc.stream.listen((state) {
+      if (state.fstatus == true) {
+        add(MainAddItem(Item(desc: state.desc.text)));
+      }
+    });
+  }
 
   @override
   Stream<MainState> mapEventToState(MainEvent event) async* {
@@ -34,5 +45,11 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     return state.copyWith(
       items: items,
     );
+  }
+
+  @override
+  Future<void> close() {
+    addSubscription!.cancel();
+    return super.close();
   }
 }

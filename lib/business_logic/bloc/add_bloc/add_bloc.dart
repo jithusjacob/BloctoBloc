@@ -7,7 +7,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   AddBloc()
       : super(AddState(
           desc: TextField(text: '', status: false),
-          fstatus: true,
+          fstatus: false,
         ));
 
   @override
@@ -16,6 +16,8 @@ class AddBloc extends Bloc<AddEvent, AddState> {
       yield _mapDescChangedToState(event, state);
     } else if (event is AddSubmit) {
       yield _mapSubmittedToState(event, state);
+    } else if (event is AddInitial) {
+      yield _mapInitialToState(event, state);
     }
   }
 
@@ -27,12 +29,18 @@ class AddBloc extends Bloc<AddEvent, AddState> {
     );
   }
 
+  AddState _mapInitialToState(AddInitial event, AddState state) {
+    return AddState(
+      desc: TextField(text: '', status: false),
+      fstatus: false,
+    );
+  }
+
   AddState _mapSubmittedToState(AddSubmit event, AddState state) {
     if (state.desc.status) {
       print("Succsess");
 
-      return AddState(
-        desc: TextField(text: '', status: false),
+      return state.copyWith(
         fstatus: true,
       );
     } else {

@@ -53,7 +53,6 @@ class AddPage extends StatelessWidget {
   }
 }
 
-
 class _DescInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -95,13 +94,14 @@ class _AddButton extends StatelessWidget {
           ),
           onPressed: () {
             context.read<AddBloc>().add(AddSubmit());
-            context.read<MainBloc>().add(
-                  MainAddItem(
-                    Item(
-                      desc: state.desc.text,
-                    ),
-                  ),
-                );
+            context.read<AddBloc>().add(AddInitial());
+//            context.read<MainBloc>().add(
+//                  MainAddItem(
+//                    Item(
+//                      desc: state.desc.text,
+//                    ),
+//                  ),
+//                );
             Navigator.popUntil(context, ModalRoute.withName('/'));
           },
           child: Text('Add'),
