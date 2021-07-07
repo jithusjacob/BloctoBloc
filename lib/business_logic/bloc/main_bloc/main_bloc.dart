@@ -49,7 +49,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   @override
   Future<void> close() {
-    addSubscription!.cancel();
+    addSubscription?.cancel();
     return super.close();
   }
 }
